@@ -1,0 +1,122 @@
+<html>
+<head>
+<title>Login Page</title>
+<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+<div class="container" style='padding:2rem'>
+<form name='login' method='POST' action='/login'>
+<table width="40%" bgcolor="#066106" align="center" style="margin-left:auto;margin-right:auto;">
+
+<tr>
+<td colspan=2><center><font size=4 color = white><b>SEI ALL STAR Login Page</b></font></center></td>
+</tr>
+
+<tr>
+<td><font color = white><Strong>User Name: </strong></td>
+<td><input type="text" size=25 name="userid" id= "userid" placeholder="Enter User Name"></td>
+</tr>
+
+<tr>
+<td><font color = white><Strong>Password: </strong></td>
+<td><input type="Password" size=25 name="pwd" id="pwd" placeholder="Enter Password"></td>
+</tr>
+
+<tr>
+<td ><input type="Reset" id = 'logbtn'></td>
+<!-- <td><input type="submit" onclick="return check(this.form)" value="Login"></td> -->
+<td><button type='submit' id = 'logbtn'> log in </button></td>
+</tr>
+</div>
+
+</table>
+</form>
+
+<div class="link" style='padding:2rem'>
+    
+<p>Not registered? <a href="/register"><font size=3><strong>Click Here</strong></a></p>
+<input type="button" id = 'logbtn' onclick="window.location.href = '/'" value="Go Back"/>
+    
+</div>
+<!-- <p id="demo">Click me.</p> -->
+<div id="namesFromFile">
+</div>
+
+<script language="javascript">
+<!-- function check(form){ -->
+
+  <!-- if(form.userid.value == "1" && form.pwd.value == "1"){ -->
+	  <!-- return true; -->
+  <!-- } -->
+  <!-- else{ -->
+	  <!-- alert("Wrong Password or Username") -->
+	  <!-- return false; -->
+  <!-- } -->
+<!-- } -->
+<!-- document.getElementById("demo").addEventListener("click", myFunction); -->
+
+<!-- function myFunction(form) { -->
+  <!-- document.getElementById("demo").innerHTML = "YOU CLICKED ME!"; -->
+  <!-- getNameFile(); -->
+<!-- } -->
+function check(form){
+ var fileName="users.txt", xmlHttp=new XMLHttpRequest();
+ var label = false;
+ xmlHttp.onreadystatechange=function(){
+  var tmpDoc, re=/^(.+)$/gm, arr=[], oP;
+  if(xmlHttp.readyState===4){
+   if(xmlHttp.status===200){
+    tmpDoc=xmlHttp.responseText;
+    arr=re.exec(tmpDoc);
+    while(arr!==null){
+     oP=document.createElement("P");
+     
+     <!-- document.getElementById("namesFromFile").appendChild(oP).appendChild(document.createTextNode(arr[1])); -->
+     <!-- document.getElementById("namesFromFile").appendChild(document.createTextNode("\r\n")); -->
+     document.createTextNode(arr[1]);
+     
+     //insert tests -> for style/format
+     if(arr[1].substr(0,4)==="John"){
+      oP.style.color="#f00";
+     }
+     if(arr[1].split(" ")[0]==="Sue"){
+      oP.style.color="#0c0";
+      oP.style.fontWeight="bold";
+     }
+     
+     var Userid = form.userid.value;
+     var Pwd = form.pwd.value;
+     
+     <!-- alert("\""+Userid+"\","); -->
+     <!-- alert(arr[1].split(" ")[1]); -->
+     <!-- alert("\""+Pwd+"\","); -->
+     <!-- alert(arr[1].split(" ")[3]); -->
+     <!-- alert(arr[1].split(" ")[5] == "\"verified\"},"); -->
+     if("\""+Userid+"\"," == arr[1].split(" ")[1] && "\""+Pwd+"\"," == arr[1].split(" ")[3] && arr[1].split(" ")[5] == "\"verified\"},"){
+	       window.location.href = "did_login.html";
+        break;
+     }
+     arr=re.exec(tmpDoc);
+    }
+    xmlHttp=null;
+   }
+     if(label){
+     
+   }
+   else if(label == false){
+     alert("Wrong Password or Username")
+	  return false;
+ }
+
+  }
+ };
+ xmlHttp.open("POST", fileName, true); //Use POST to prevent use of cached file
+ xmlHttp.send();
+ //alert("wait a moment");
+ //alert("finished processing");
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Main Page</title>
+<link rel="stylesheet" type="text/css" href="style.css">
+<h1>Welcome to SEI ALL STAR Main Page</h1>
+</head>
+<body>
+    <div class = 'login' style='padding:4rem'>
+        <input style='padding:2rem' type="button" id = 'logbtn' onclick="window.location.href = '/did_login'" value="Goto Admin Portal"/>
+        <form name='log_out' action='/log_out'>         
+          <button style='padding:2rem' type='submit' id = 'logbtn'>Log Out</button>
+          </form>
+    </div>
+  <div class='warning' style='color:maroon'>
+        {% if error is defined %}
+           {{ error }}
+        {% endif %}
+    </div>
+    <div class= 'logo'>
+      <img id = "frtlogo" src="Yotsuba_Nakano_Anime.png">
+    </div>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Admin portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body>
+  <div style='padding:2rem'>
+  <h1>Admin Portal</h1>  
+  </div>
+  
+  <div style='padding:4rem'>  
+    <div id="pageDiv">
+  <td><input type="submit" id = 'logbtn' onclick="return getNameFile()" value="see user status" style='padding:2rem'></td>
+    </div>
+    
+    <form name='did_login' method='POST' id="namesFromFile">
+      <div class='warning' style='color:maroon'>
+       {% if error is defined %}
+          {{ error }}
+       {% endif %}
+      </div>
+    </form>
+     
+    <form name='Go_back' action='/'>     
+      <button type='submit' id = 'logbtn'> Go Back</button>
+    </form>
+    
+  </div>
+  
+<script type = "text/javascript">
+    if(document.referrer === '')window.location = 'login'
+</script> 
+
+<script language="javascript"> 
+function getNameFile(){
+ var fileName="users.txt", xmlHttp=new XMLHttpRequest();
+ xmlHttp.onreadystatechange=function(){
+  var tmpDoc, re=/^(.+)$/gm, arr=[], oP;
+  if(xmlHttp.readyState===4){
+   if(xmlHttp.status===200){
+    tmpDoc=xmlHttp.responseText;
+    arr=re.exec(tmpDoc);
+    counter = 0;
+    while(arr!==null){
+     oP=document.createElement("P");
+     document.getElementById("namesFromFile").appendChild(oP).appendChild(document.createTextNode(arr[1]));
+     document.getElementById("namesFromFile").appendChild(document.createTextNode("\r\n"));
+     //insert tests -> for style/format
+     <!-- if(arr[1].substr(0,4)==="John"){ -->
+      <!-- oP.style.color="#f00"; -->
+     <!-- } -->
+     <!-- alert(arr[1].split(" ")[3]==="verified"); -->
+     if(arr[1].split(" ")[3]==="verified"){
+      var btn = document.createElement("BUTTON");
+      btn.innerHTML = "VOID THIS USER";
+      btn.value = counter;
+      btn.type = "submit";
+      btn.name = 'submit_button';
+      btn.id = 'jsbtn';
+      //alert(btn.name);
+      document.getElementById("namesFromFile").appendChild(btn);
+      
+      var sendbtn = document.createElement("BUTTON");
+      sendbtn.innerHTML = "SEND AN EMAIL";
+      sendbtn.value = counter + 1;
+      sendbtn.type = "submit";
+      sendbtn.name = 'submit_button';
+      sendbtn.id = 'jsbtn';
+      //alert(btn.name);
+      document.getElementById("namesFromFile").appendChild(sendbtn);
+     }
+     if(arr[1].split(" ")[3]==="pending"){
+      var btn = document.createElement("BUTTON");
+      btn.innerHTML = "VERIFY THIS USER";
+      btn.value = counter;
+      btn.type = "submit";
+      btn.name = 'submit_button';
+      btn.id = 'jsbtn';
+      //alert(btn.name);
+      document.getElementById("namesFromFile").appendChild(btn);
+      
+      var sendbtn = document.createElement("BUTTON");
+      sendbtn.innerHTML = "SEND AN EMAIL";
+      sendbtn.value = counter + 1;
+      sendbtn.type = "submit";
+      sendbtn.name = 'submit_button';
+      sendbtn.id = 'jsbtn';
+      //alert(btn.name);
+      document.getElementById("namesFromFile").appendChild(sendbtn);
+     }
+     arr=re.exec(tmpDoc);
+     counter = counter + 2; //counter increment by 2
+    }
+    xmlHttp=null;
+   }
+  }
+ };
+ xmlHttp.open("POST", fileName, true); //Use POST to prevent use of cached file
+ xmlHttp.send();
+ var fs = require("fs");
+var fileContent = "hello";
+
+fs.writeFile("./sample.txt", fileContent, (err) => {
+    if (err) {
+        console.error(err);
+        return;
+    };
+    console.log("File has been created");
+});
+}
+</script>
+      
+  </body>
+</html>
